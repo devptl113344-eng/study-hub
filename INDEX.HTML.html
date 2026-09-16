@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM SHREE MODEL SCHOOL HALOL</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f4f7fb;--text:#172033;--card:#ffffff;--navbg:#ffffff;--inputbg:#ffffff;--inputborder:#ccd3e0;--qbg:#fafbff;--qborder:#e1e6ef;--footcolor:#667}
+body.dark{--bg:#10141f;--text:#e6e9f2;--card:#1b2130;--navbg:#1b2130;--inputbg:#232a3d;--inputborder:#333c52;--qbg:#232a3d;--qborder:#333c52;--footcolor:#9aa3b8}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);transition:background .25s,color .25s}
+header{background:linear-gradient(135deg,#3157e8,#7b35d8);color:white;padding:22px 18px;text-align:center}
+header h1{font-size:30px} header p{margin-top:6px}
+nav{display:flex;gap:8px;overflow:auto;background:var(--navbg);padding:10px;position:sticky;top:0;z-index:5;box-shadow:0 2px 8px #0001}
+nav button{border:0;background:#eef2ff;padding:10px 14px;border-radius:20px;white-space:nowrap;color:#172033}
+body.dark nav button{background:#232a3d;color:#e6e9f2}
+main{max-width:1000px;margin:auto;padding:18px}
+.hero{background:var(--card);border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:0 5px 18px #00000010}
+.hero h2{margin-bottom:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.card{background:var(--card);padding:18px;border-radius:16px;box-shadow:0 4px 15px #0001}
+.card h3{margin-bottom:8px}
+.card button,.primary{border:0;background:#3157e8;color:white;padding:10px 14px;border-radius:10px;margin-top:10px}
+section{margin-top:22px}
+.hidden{display:none}
+input,select{padding:11px;border:1px solid var(--inputborder);border-radius:10px;width:100%;margin:6px 0;background:var(--inputbg);color:var(--text)}
+.question{padding:14px;border:1px solid var(--qborder);border-radius:12px;margin:10px 0;background:var(--qbg)}
+#timer{font-size:52px;text-align:center;font-weight:bold;margin:18px}
+.stat{font-size:28px;font-weight:bold}
+footer{text-align:center;padding:25px;color:var(--footcolor)}
+.badge{display:inline-block;background:#eef2ff;color:#3157e8;border-radius:20px;padding:4px 10px;font-size:12px;margin:2px}
+.track-row{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid #e1e6ef;border-radius:12px;margin:8px 0;background:#fafbff}
+.track-row.done{opacity:.55;text-decoration:line-through}
+.day-btn{width:34px;height:34px;border-radius:8px;border:1px solid #ccd3e0;background:white;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+.day-btn.present{background:#22c55e;color:white;border-color:#22c55e}
+.day-btn.absent{background:#ef4444;color:white;border-color:#ef4444}
+@media print{
+nav,header,footer,.primary,button{display:none!important}
+main{max-width:100%;padding:0}
+}
+</style>
+</head>
+<body>
+<header>
+<h1>🏫 PM SHREE MODEL SCHOOL HALOL</h1>
+<p>ધોરણ 11 અને 12 • સ્માર્ટ અભ્યાસ સ્ટડી હબ</p>
+<p style="margin-top:6px;font-size:13px;opacity:.85">📞 સંપર્ક: 9054140708</p>
+<div style="margin-top:12px;display:inline-flex;gap:8px;background:rgba(255,255,255,.15);padding:6px;border-radius:20px">
+<button id="std11Btn" onclick="setStd(11)" style="border:0;background:white;color:#3157e8;padding:8px 18px;border-radius:16px;font-weight:bold">ધોરણ 11</button>
+<button id="std12Btn" onclick="setStd(12)" style="border:0;background:transparent;color:white;padding:8px 18px;border-radius:16px;font-weight:bold">ધોરણ 12</button>
+</div><br>
+<button onclick="toggleDark()" style="margin-top:10px;border:0;background:rgba(255,255,255,.2);color:white;padding:8px 14px;border-radius:20px">🌙 Dark Mode</button>
+<p id="greetBar" style="margin-top:8px;font-size:14px;opacity:.9"></p>
+</header>
+
+<nav>
+<button onclick="show('home')">🏠 હોમ</button>
+<button onclick="show('subjects')">📚 વિષયો</button>
+<button onclick="show('notes')">📝 નોંધો</button>
+<button onclick="show('questions')">❓ પ્રશ્નો</button>
+<button onclick="show('mcq')">🧪 MCQ ટેસ્ટ</button>
+<button onclick="show('resources')">📖 પાઠ્યપુસ્તક</button>
+<button onclick="show('practical')">🔬 પ્રેક્ટિકલ</button>
+<button onclick="show('videos')">🎥 વિડિયો લેક્ચર</button>
+<button onclick="show('tracker')">📋 હાજરી/હોમવર્ક</button>
+<button onclick="show('exam')">🎯 પરીક્ષા તૈયારી</button>
+<button onclick="show('timer')">⏱️ અભ્યાસ ટાઈમર</button>
+<button onclick="show('login')">👤 લોગિન</button>
+</nav>
+
+<main>
+<section id="home">
+<div class="hero">
+<h2>🚀 Welcome to PM SHREE MODEL SCHOOL HALOL</h2>
+<p>ધોરણ 11 અને 12 વિજ્ઞાન માટેનું સંપૂર્ણ અભ્યાસ ડેશબોર્ડ. ઉપર ધોરણ 11 / ધોરણ 12 પસંદ કરો અને નીચેના વિકલ્પોમાંથી અભ્યાસ શરૂ કરો.</p>
+<p style="margin-top:8px;font-size:13px;color:var(--footcolor)">📞 શાળા સંપર્ક નંબર: <b>9054140708</b></p>
+<input id="search" placeholder="🔍 શોધો: રસાયણશાસ્ત્ર, ભૌતિકશાસ્ત્ર, MCQ..." oninput="searchCards()">
+</div>
+<div class="grid">
+<div class="card searchable"><h3>📚 વિષયો</h3><p>Physics, Chemistry, Maths, Biology</p><button onclick="show('subjects')">ખોલો</button></div>
+<div class="card searchable"><h3>📝 નોંધો</h3><p>Chapter-wise quick revision notes.</p><button onclick="show('notes')">ખોલો</button></div>
+<div class="card searchable"><h3>❓ મહત્વના પ્રશ્નો</h3><p>પરીક્ષાલક્ષી પ્રશ્નો અને જવાબો.</p><button onclick="show('questions')">ખોલો</button></div>
+<div class="card searchable"><h3>🧪 MCQ ટેસ્ટ</h3><p>Quick practice test અને score.</p><button onclick="show('mcq')">શરૂ કરો</button></div>
+<div class="card searchable"><h3>🔬 પ્રેક્ટિકલ</h3><p>ધોરણ 11 અને 12 પ્રેક્ટિકલ લિંક્સ.</p><button onclick="show('practical')">ખોલો</button></div>
+<div class="card searchable"><h3>📖 પાઠ્યપુસ્તક</h3><p>ધોરણ 11/12 ટેક્સ્ટબુક અને Vision Paper.</p><button onclick="show('resources')">ખોલો</button></div>
+</div>
+</section>
+
+<section id="subjects" class="hidden">
+<h2>📚 વિષયો</h2><div class="grid">
+<div class="card"><h3>⚡ ભૌતિકશાસ્ત્ર</h3><p>યાંત્રિકશાસ્ત્ર, એકમો, ગતિ અને વધુ.</p></div>
+<div class="card"><h3>🧪 રસાયણશાસ્ત્ર</h3><p>મૂળભૂત ખ્યાલો, બંધારણ, વર્ગીકરણ વગેરે.</p></div>
+<div class="card"><h3>📐 ગણિત</h3><p>સેટ, સંબંધ, વિધેય અને બીજગણિત.</p></div>
+<div class="card"><h3>🧬 જીવવિજ્ઞાન</h3><p>સજીવ વિશ્વ, કોષ, વિવિધતા વગેરે.</p></div>
+<div class="card"><h3>🔤 English</h3><p>Grammar, Prose, Poetry and Writing Skills.</p></div>
+<div class="card"><h3>🕉️ સંસ્કૃત</h3><p>વ્યાકરણ, ગદ્ય, પદ્ય અને શ્લોકો.</p></div>
+<div class="card"><h3>💻 કમ્પ્યુટર</h3><p>Programming basics, Computer fundamentals.</p></div>
+</div></section>
+
+<section id="notes" class="hidden">
+<h2>📝 ઝડપી નોંધો</h2>
+<button class="primary" onclick="window.print()" style="margin-bottom:12px">🖨️ Print / Save as PDF</button>
+<div class="card">
+<h3>⚡ ભૌતિકશાસ્ત્ર — ઝડપી પુનરાવર્તન</h3>
+<p><b>SI units:</b> length = મીટર (m), mass = kilogram (kg), time = સેકન્ડ (s).</p>
+<p><b>Speed:</b> distance ÷ time.</p><p><b>Velocity:</b> displacement ÷ time.</p>
+</div>
+<div class="card" style="margin-top:12px">
+<h3>🧪 રસાયણશાસ્ત્ર — ઝડપી પુનરાવર્તન</h3>
+<p><b>Mole:</b> amount of substance containing Avogadro number of કણો.</p>
+<p><b>Atomic number:</b> number of પ્રોટોન in an atom.</p>
+<p><b>Mass number:</b> પ્રોટોન + ન્યુટ્રોનનો સરવાળો.</p>
+<p><b>Avogadro's number:</b> 6.022 × 10²³.</p>
+</div>
+<div class="card" style="margin-top:12px">
+<h3>📐 ગણિત — ઝડપી પુનરાવર્તન</h3>
+<p><b>Set:</b> સુવ્યાખ્યિત વસ્તુઓનો સંગ્રહ.</p>
+<p><b>Function:</b> દરેક ઈનપુટ માટે એક જ આઉટપુટ આપતો સંબંધ.</p>
+<p><b>Quadratic equation:</b> ax² + bx + c = 0 (a ≠ 0).</p>
+<p><b>sin²θ + cos²θ = 1</b> — મૂળભૂત ત્રિકોણમિતિ સૂત્ર.</p>
+</div>
+<div class="card" style="margin-top:12px">
+<h3>🧬 જીવવિજ્ઞાન — ઝડપી પુનરાવર્તન</h3>
+<p><b>કોષ:</b> સજીવોનો મૂળભૂત રચનાત્મક અને કાર્યાત્મક એકમ.</p>
+<p><b>વર્ગીકરણ ક્રમ:</b> Kingdom → Phylum → Class → Order → Family → Genus → Species.</p>
+<p><b>Photosynthesis:</b> 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂ (સૂર્યપ્રકાશની હાજરીમાં).</p>
+</div>
+<div class="card" style="margin-top:12px">
+<h3>🔤 English — Quick Revision</h3>
+<p><b>Noun:</b> a word that names a person, place, thing, or idea.</p>
+<p><b>Tenses:</b> Present, Past, Future — each with Simple, Continuous, Perfect, Perfect Continuous.</p>
+<p><b>Active/Passive Voice:</b> Active — subject does the action; Passive — subject receives the action.</p>
+</div>
+<div class="card" style="margin-top:12px">
+<h3>🕉️ સંસ્કૃત — ઝડપી પુનરાવર્તન</h3>
+<p><b>સંધિ:</b> બે વર્ણોના મેળાપથી ઉત્પન્ન થતો ફેરફાર.</p>
+<p><b>કારક:</b> વાક્યમાં ક્રિયાપદ સાથે નામનો સંબંધ દર્શાવતું તત્વ (કર્તા, કર્મ, કરણ વગેરે).</p>
+<p><b>ધાતુરૂપ:</b> ધાતુ (verb root) પરથી બનતા ક્રિયાપદના રૂપો.</p>
+</div>
+<div class="card" style="margin-top:12px">
+<h3>💻 કમ્પ્યુટર — ઝડપી પુનરાવર્તન</h3>
+<p><b>Hardware:</b> કમ્પ્યુટરના ભૌતિક ભાગો (CPU, Keyboard, Monitor વગેરે).</p>
+<p><b>Software:</b> કમ્પ્યુટરને ચલાવતા પ્રોગ્રામ્સ અને સૂચનાઓનો સમૂહ.</p>
+<p><b>Algorithm:</b> સમસ્યાના ઉકેલ માટેના ક્રમબદ્ધ પગલાંઓ.</p>
+</div>
+</section>
+
+<section id="questions" class="hidden">
+<h2>❓ મહત્વના પ્રશ્નો</h2>
+<h3 style="margin-bottom:8px">📗 ધોરણ 11</h3>
+<div class="grid" style="margin-bottom:14px">
+<button onclick="showQBank('phy')">⚡ ભૌતિકશાસ્ત્ર</button>
+<button onclick="showQBank('chem')">🧪 રસાયણશાસ્ત્ર</button>
+<button onclick="showQBank('math')">📐 ગણિત</button>
+<button onclick="showQBank('bio')">🧬 જીવવિજ્ઞાન</button>
+<button onclick="showQBank('eng')">🔤 English</button>
+<button onclick="showQBank('sans')">🕉️ સંસ્કૃત</button>
+<button onclick="showQBank('comp')">💻 કમ્પ્યુટર</button>
+</div>
+<h3 style="margin-bottom:8px">📙 ધોરણ 12</h3>
+<div class="grid" style="margin-bottom:14px">
+<button onclick="showQBank('phy12')">⚡ ભૌતિકશાસ્ત્ર</button>
+<button onclick="showQBank('chem12')">🧪 રસાયણશાસ્ત્ર</button>
+<button onclick="showQBank('math12')">📐 ગણિત</button>
+<button onclick="showQBank('bio12')">🧬 જીવવિજ્ઞાન</button>
+<button onclick="showQBank('eng12')">🔤 English</button>
+<button onclick="showQBank('sans12')">🕉️ સંસ્કૃત</button>
+<button onclick="showQBank('comp12')">💻 કમ્પ્યુટર</button>
+</div>
+<div style="margin:10px 0"><button class="primary" onclick="window.print()">🖨️ Print / Save as PDF</button></div>
+<div id="qbank"></div>
+</section>
+
+<section id="mcq" class="hidden">
+<h2>🧪 Quick MCQ કસોટી</h2>
+<h3 style="margin-bottom:8px">📗 ધોરણ 11</h3>
+<div class="grid" style="margin-bottom:14px">
+<button onclick="loadQuiz('phy')">⚡ ભૌતિકશાસ્ત્ર</button>
+<button onclick="loadQuiz('chem')">🧪 રસાયણશાસ્ત્ર</button>
+<button onclick="loadQuiz('math')">📐 ગણિત</button>
+<button onclick="loadQuiz('bio')">🧬 જીવવિજ્ઞાન</button>
+<button onclick="loadQuiz('eng')">🔤 English</button>
+<button onclick="loadQuiz('sans')">🕉️ સંસ્કૃત</button>
+<button onclick="loadQuiz('comp')">💻 કમ્પ્યુટર</button>
+<button onclick="loadQuiz('all')">🌟 ધોરણ 11 - બધા વિષયો</button>
+</div>
+<h3 style="margin-bottom:8px">📙 ધોરણ 12</h3>
+<div class="grid" style="margin-bottom:14px">
+<button onclick="loadQuiz('phy12')">⚡ ભૌતિકશાસ્ત્ર</button>
+<button onclick="loadQuiz('chem12')">🧪 રસાયણશાસ્ત્ર</button>
+<button onclick="loadQuiz('math12')">📐 ગણિત</button>
+<button onclick="loadQuiz('bio12')">🧬 જીવવિજ્ઞાન</button>
+<button onclick="loadQuiz('eng12')">🔤 English</button>
+<button onclick="loadQuiz('sans12')">🕉️ સંસ્કૃત</button>
+<button onclick="loadQuiz('comp12')">💻 કમ્પ્યુટર</button>
+<button onclick="loadQuiz('all12')">🌟 ધોરણ 12 - બધા વિષયો</button>
+</div>
+<div id="quiz"></div>
+<button class="primary" onclick="checkQuiz()">Submit કસોટી</button>
+<h3 id="score"></h3>
+</section>
+
+<section id="resources" class="hidden">
+<h2>📖 પાઠ્યપુસ્તક / અભ્યાસ સામગ્રી</h2>
+
+<h3 style="margin:14px 0 8px">📗 ધોરણ 11 પાઠ્યપુસ્તક</h3>
+<div class="grid">
+<div class="card"><h3>📘 GSEB (ધોરણ 11)</h3><p>ગુજરાત બોર્ડનું સત્તાવાર પાઠ્યપુસ્તક.</p><a href="https://www.gseb.org/gujarati/textbook.aspx" target="_blank"><button>ખોલો GSEB</button></a></div>
+<div class="card"><h3>📘 NCERT (Class 11)</h3><p>સત્તાવાર NCERT પાઠ્યપુસ્તક સામગ્રી.</p><a href="https://ncert.nic.in/textbook.php?keph1=0-8" target="_blank"><button>ખોલો NCERT</button></a></div>
+<div class="card"><h3>🎓 ePathshala</h3><p>ડિજિટલ અભ્યાસ સામગ્રી ધોરણ 11.</p><a href="https://epathshala.nic.in/" target="_blank"><button>ખોલો ePathshala</button></a></div>
+<div class="card"><h3>🌐 DIKSHA</h3><p>શાળાના અભ્યાસ માટેની સામગ્રી.</p><a href="https://diksha.gov.in/" target="_blank"><button>ખોલો DIKSHA</button></a></div>
+</div>
+
+<h3 style="margin:22px 0 8px">📙 ધોરણ 12 પાઠ્યપુસ્તક</h3>
+<div class="grid">
+<div class="card"><h3>📘 GSEB (ધોરણ 12)</h3><p>ગુજરાત બોર્ડનું સત્તાવાર પાઠ્યપુસ્તક.</p><a href="https://www.gseb.org/gujarati/textbook.aspx" target="_blank"><button>ખોલો GSEB</button></a></div>
+<div class="card"><h3>📘 NCERT (Class 12)</h3><p>સત્તાવાર NCERT પાઠ્યપુસ્તક સામગ્રી.</p><a href="https://ncert.nic.in/textbook.php?keph2=0-10" target="_blank"><button>ખોલો NCERT</button></a></div>
+<div class="card"><h3>🎓 ePathshala</h3><p>ડિજિટલ અભ્યાસ સામગ્રી ધોરણ 12.</p><a href="https://epathshala.nic.in/" target="_blank"><button>ખોલો ePathshala</button></a></div>
+<div class="card"><h3>🌐 DIKSHA</h3><p>શાળાના અભ્યાસ માટેની સામગ્રી.</p><a href="https://diksha.gov.in/" target="_blank"><button>ખોલો DIKSHA</button></a></div>
+</div>
+
+<h3 style="margin:22px 0 8px">📝 પરીક્ષા પેપર પ્રેક્ટિસ</h3>
+<div class="grid">
+<div class="card"><h3>📄 Vision Paper</h3><p>પરીક્ષાની તૈયારી માટે પ્રશ્નપત્રો અને પેપર પ્રેક્ટિસ.</p><a href="https://visionpapers.info/" target="_blank"><button>ખોલો Vision Paper</button></a></div>
+</div>
+</section>
+
+<section id="practical" class="hidden">
+<h2>🔬 પ્રેક્ટિકલ</h2>
+
+<h3 style="margin:14px 0 8px">ધોરણ 11 પ્રેક્ટિકલ</h3>
+<div class="grid">
+<div class="card"><h3>⚡ ભૌતિકશાસ્ત્ર પ્રેક્ટિકલ</h3><p>Class 11 Physics Practical / Lab Manual.</p><a href="https://ncert.nic.in/labmanuel.php?ph=lm-11" target="_blank"><button>જુઓ</button></a></div>
+<div class="card"><h3>🧪 રસાયણશાસ્ત્ર પ્રેક્ટિકલ</h3><p>Class 11 Chemistry Practical / Lab Manual.</p><a href="https://ncert.nic.in/labmanuel.php?ch=lm-11" target="_blank"><button>જુઓ</button></a></div>
+<div class="card"><h3>🧬 જીવવિજ્ઞાન પ્રેક્ટિકલ</h3><p>Class 11 Biology Practical / Lab Manual.</p><a href="https://ncert.nic.in/labmanuel.php?bl=lm-11" target="_blank"><button>જુઓ</button></a></div>
+<div class="card"><h3>💻 કમ્પ્યુટર પ્રેક્ટિકલ</h3><p>Class 11 Computer Practical.</p><a href="https://www.youtube.com/results?search_query=class+11+computer+practical+gujarat+board" target="_blank"><button>જુઓ</button></a></div>
+</div>
+
+<h3 style="margin:22px 0 8px">ધોરણ 12 પ્રેક્ટિકલ</h3>
+<div class="grid">
+<div class="card"><h3>⚡ ભૌતિકશાસ્ત્ર પ્રેક્ટિકલ</h3><p>Class 12 Physics Practical / Lab Manual.</p><a href="https://ncert.nic.in/labmanuel.php?ph=lm-12" target="_blank"><button>જુઓ</button></a></div>
+<div class="card"><h3>🧪 રસાયણશાસ્ત્ર પ્રેક્ટિકલ</h3><p>Class 12 Chemistry Practical / Lab Manual.</p><a href="https://ncert.nic.in/labmanuel.php?ch=lm-12" target="_blank"><button>જુઓ</button></a></div>
+<div class="card"><h3>🧬 જીવવિજ્ઞાન પ્રેક્ટિકલ</h3><p>Class 12 Biology Practical / Lab Manual.</p><a href="https://ncert.nic.in/labmanuel.php?bl=lm-12" target="_blank"><button>જુઓ</button></a></div>
+<div class="card"><h3>💻 કમ્પ્યુટર પ્રેક્ટિકલ</h3><p>Class 12 Computer Practical.</p><a href="https://www.youtube.com/results?search_query=class+12+computer+practical+gujarat+board" target="_blank"><button>જુઓ</button></a></div>
+</div>
+<p style="margin-top:14px;font-size:13px;color:#889">💡 જો શાળા તરફથી ચોક્કસ પ્રેક્ટિકલ મેન્યુઅલ કે લિંક હોય, તો 9054140708 પર મોકલો — અહીં સીધી ઉમેરી દેવાશે.</p>
+</section>
+
+<section id="exam" class="hidden">
+<h2>🎯 પરીક્ષા તૈયારી</h2>
+<div class="grid">
+<div class="card"><h3>1️⃣ શીખો</h3><p>ખ્યાલ → નોંધો → ઉદાહરણો.</p></div>
+<div class="card"><h3>2️⃣ અભ્યાસ કરો</h3><p>મહત્વના પ્રશ્નો + MCQ.</p></div>
+<div class="card"><h3>3️⃣ પુનરાવર્તન</h3><p>દરરોજ 20–30 મિનિટ ઝડપી પુનરાવર્તન.</p></div>
+<div class="card"><h3>4️⃣ કસોટી</h3><p>ટાઈમર સાથે મોક ટેસ્ટ આપો.</p></div>
+</div>
+<div class="card" style="margin-top:14px">
+<h3>📄 Vision Paper — પેપર પ્રેક્ટિસ</h3>
+<p>પરીક્ષાની તૈયારી માટે Vision Paper પરથી નમૂના પ્રશ્નપત્રો પ્રેક્ટિસ કરો.</p>
+<a href="https://visionpapers.info/" target="_blank"><button class="primary">ખોલો Vision Paper</button></a>
+</div>
+</section>
+
+<section id="timer" class="hidden">
+<h2>⏱️ અભ્યાસ ટાઈમર</h2>
+<div class="card">
+<div id="timer">25:00</div>
+<button class="primary" onclick="startTimer()">▶ શરૂ કરો</button>
+<button class="primary" onclick="pauseTimer()">⏸ રોકો</button>
+<button class="primary" onclick="resetTimer()">↻ ફરીથી સેટ કરો</button>
+<p style="margin-top:15px;text-align:center">પોમોડોરો: 25 મિનિટ અભ્યાસ + 5 મિનિટ વિરામ.</p>
+</div>
+</section>
+
+<section id="videos" class="hidden">
+<h2>🎥 વિડિયો લેક્ચર</h2>
+<p style="margin-bottom:12px;color:#667">વિષય પસંદ કરો — YouTube પર સંબંધિત લેક્ચર શોધવા માટે.</p>
+<div class="grid">
+<div class="card"><h3>⚡ ભૌતિકશાસ્ત્ર</h3><p>Class 11 Physics ધોરણ 11 વિડિયો લેક્ચર.</p><a href="https://www.youtube.com/results?search_query=class+11+gujarat+board+physics+lecture+gujarati" target="_blank"><button>જુઓ</button></a></div>
+<div class="card"><h3>🧪 રસાયણશાસ્ત્ર</h3><p>Class 11 Chemistry ધોરણ 11 વિડિયો લેક્ચર.</p><a href="https://www.youtube.com/results?search_query=class+11+gujarat+board+chemistry+lecture+gujarati" target="_blank"><button>જુઓ</button></a></div>
+<div class="card"><h3>📐 ગણિત</h3><p>Class 11 Maths ધોરણ 11 વિડિયો લેક્ચર.</p><a href="https://www.youtube.com/results?search_query=class+11+gujarat+board+maths+lecture+gujarati" target="_blank"><button>જુઓ</button></a></div>
+<div class="card"><h3>🧬 જીવવિજ્ઞાન</h3><p>Class 11 Biology ધોરણ 11 વિડિયો લેક્ચર.</p><a href="https://www.youtube.com/results?search_query=class+11+gujarat+board+biology+lecture+gujarati" target="_blank"><button>જુઓ</button></a></div>
+<div class="card"><h3>🔤 English</h3><p>Class 11 English lectures.</p><a href="https://www.youtube.com/results?search_query=class+11+gujarat+board+english+lecture" target="_blank"><button>જુઓ</button></a></div>
+<div class="card"><h3>🕉️ સંસ્કૃત</h3><p>Class 11 Sanskrit ધોરણ 11 વિડિયો લેક્ચર.</p><a href="https://www.youtube.com/results?search_query=class+11+gujarat+board+sanskrit+lecture" target="_blank"><button>જુઓ</button></a></div>
+<div class="card"><h3>💻 કમ્પ્યુટર</h3><p>Class 11 Computer basics lectures.</p><a href="https://www.youtube.com/results?search_query=class+11+computer+basics+lecture+gujarati" target="_blank"><button>જુઓ</button></a></div>
+</div>
+<p style="margin-top:14px;font-size:13px;color:#889">💡 તમારા શિક્ષક જો કોઈ ચોક્કસ YouTube ચેનલ કે પ્લેલિસ્ટ સૂચવે, તો તેની લિંક મને આપો — હું અહીં સીધી ઉમેરી દઈશ.</p>
+</section>
+
+<section id="tracker" class="hidden">
+<h2>📋 હાજરી અને હોમવર્ક ટ્રેકર</h2>
+<div class="card">
+<h3>📅 આ અઠવાડિયાની હાજરી</h3>
+<p style="color:#667;margin-bottom:10px">દિવસ પર ક્લિક કરો: લીલો = હાજર, લાલ = ગેરહાજર</p>
+<div id="attendanceDays" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+<p id="attSummary" style="margin-top:10px;font-weight:bold"></p>
+</div>
+<div class="card" style="margin-top:14px">
+<h3>📝 હોમવર્ક લિસ્ટ</h3>
+<input id="hwSubject" placeholder="વિષય (દા.ત. ભૌતિકશાસ્ત્ર)">
+<input id="hwTask" placeholder="કાર્ય (દા.ત. Chapter 2 દાખલા)">
+<input id="hwDate" type="date">
+<button class="primary" onclick="addHomework()">➕ ઉમેરો</button>
+<div id="hwList" style="margin-top:12px"></div>
+</div>
+<p style="margin-top:10px;font-size:13px;color:#889">⚠️ નોંધ: આ ડેટા ફક્ત આ બ્રાઉઝર સેશન પૂરતો સચવાય છે — પેજ રિફ્રેશ થાય તો રિસેટ થઈ જશે.</p>
+</section>
+
+<section id="login" class="hidden">
+<h2>👤 વિદ્યાર્થી લોગિન</h2>
+<div class="card">
+<input id="loginName" placeholder="તમારું નામ">
+<input id="loginRoll" placeholder="રોલ નંબર">
+<select id="loginDiv"><option value="">વિભાગ પસંદ કરો</option><option>A</option><option>B</option><option>C</option></select>
+<button class="primary" onclick="doLogin()">✅ લોગિન કરો</button>
+<button onclick="doLogout()">🚪 લોગ આઉટ</button>
+<p id="loginStatus" style="margin-top:12px;font-weight:bold"></p>
+<p style="margin-top:10px;font-size:13px;color:#889">⚠️ નોંધ: આ એક સાદું ડેમો લોગિન છે (ફક્ત આ ડિવાઈસ/સેશન માટે, કોઈ સર્વર-બેઝ્ડ ખાતું બનતું નથી). ખરા multi-user accounts માટે બેકએન્ડ સર્વર (દા.ત. ડેટાબેઝ) જરૂરી પડે.</p>
+</div>
+</section>
+</main>
+<footer>🏫 PM SHREE MODEL SCHOOL HALOL • સ્માર્ટ અભ્યાસ માટે બનાવેલ 📚<br><span style="font-size:13px">📞 સંપર્ક: 9054140708</span></footer>
+
+<script>
+function show(id){
+document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+document.getElementById(id).classList.remove('hidden');
+window.scrollTo({top:0,behavior:'smooth'});
+}
+function searchCards(){
+let q=document.getElementById('search').value.toLowerCase();
+document.querySelectorAll('.searchable').forEach(c=>c.style.display=c.innerText.toLowerCase().includes(q)?'block':'none');
+}
+// ==== MCQ પ્રશ્ન બેંક (વિષય પ્રમાણે) ====
+const mcqBank={
+phy:[
+["લંબાઈનો SI એકમ કયો છે?","મીટર","kg","સેકન્ડ","એમ્પિયર",0],
+["ઝડપ (Speed) એટલે શું?","અંતર ÷ સમય","સમય ÷ અંતર","અંતર × સમય","વેગ × સમય",0],
+["બળનો SI એકમ કયો છે?","ન્યુટન","જૂલ","વોટ","પાસ્કલ",0],
+["પ્રવેગ (Acceleration) નો એકમ કયો છે?","m/s","m/s²","kg·m/s","N/m",1],
+["ન્યૂટનનો પ્રથમ નિયમ કોની સાથે સંબંધિત છે?","જડત્વ","ઊર્જા","ઘર્ષણ","ગુરુત્વાકર્ષણ",0],
+["કાર્યનો SI એકમ કયો છે?","જૂલ","ન્યુટન","વોટ","વોલ્ટ",0]
+],
+chem:[
+["પરમાણુ ક્રમાંક કોની સંખ્યા બરાબર છે?","ન્યુટ્રોન","પ્રોટોન","અણુઓ","કક્ષાઓ",1],
+["એક મોલમાં આશરે કેટલા કણો હોય છે?","6.022×10²³ કણો","3×10⁸ કણો","9.8 કણો","100 કણો",0],
+["ઈલેક્ટ્રોનનો શોધક કોણ છે?","J.J. Thomson","Rutherford","Bohr","Dalton",0],
+["pH સ્કેલ કોનું માપ દર્શાવે છે?","એસિડિટી/બેઝિકતા","તાપમાન","દબાણ","ઘનતા",0],
+["મિથેનનું રાસાયણિક સૂત્ર શું છે?","CH₄","C₂H₆","CO₂","NH₃",0],
+["ઉમદા વાયુઓ (Noble gases) ના બાહ્યતમ કક્ષામાં કેટલા ઈલેક્ટ્રોન હોય છે (He સિવાય)?","2","4","6","8",3]
+],
+math:[
+["જો A = {1,2,3} હોય તો A નો ઘાત સમુચ્ચય (power set) માં કેટલા ઘટકો હોય?","6","8","9","3",1],
+["sin 90° ની કિંમત કેટલી છે?","0","1","-1","અનંત",1],
+["દ્વિઘાત સમીકરણ ax²+bx+c=0 ના મૂળ કયા સૂત્રથી મળે?","શ્રીધરાચાર્ય સૂત્ર","પાયથાગોરસ પ્રમેય","સાઈન નિયમ","લોગ નિયમ",0],
+["f(x)=x² એક ___ વિધેય છે.","યુગ્મ (Even)","અયુગ્મ (Odd)","બંને નહીં","રેખીય",0],
+["સંમુચ્ચય {1,2,3} અને {2,3,4} નું છેદ (Intersection) શું છે?","{2,3}","{1,4}","{1,2,3,4}","{}",0],
+["1 થી 10 સુધીની સંખ્યાઓનો સરેરાશ (mean) કેટલો છે?","5.5","5","6","10",0]
+],
+bio:[
+["કોષનું 'પાવર હાઉસ' કોને કહેવાય છે?","માઈટોકોન્ડ્રિયા","ન્યુક્લિયસ","રાયબોઝોમ","ગોલ્ગી બોડી",0],
+["પ્રકાશસંશ્લેષણ (Photosynthesis) ક્યાં થાય છે?","હરિતકણ (Chloroplast)","માઈટોકોન્ડ્રિયા","ન્યુક્લિયસ","કોષરસ",0],
+["મનુષ્યમાં રંગસૂત્રો (Chromosomes) ની કુલ સંખ્યા કેટલી છે?","46","23","44","48",0],
+["વર્ગીકરણ વિજ્ઞાનના પિતા કોને કહેવાય છે?","કેરોલસ લિનિયસ","ચાર્લ્સ ડાર્વિન","ગ્રેગોર મેન્ડલ","લુઈ પાશ્ચર",0],
+["કોષ પટલ (Cell membrane) મુખ્યત્વે શેનું બનેલું છે?","લિપિડ અને પ્રોટીન","માત્ર સેલ્યુલોઝ","માત્ર પ્રોટીન","માત્ર કાર્બોહાઇડ્રેટ",0],
+["DNA નું પૂરું નામ શું છે?","Deoxyribonucleic Acid","Dinitrogen Acid","Deoxyribose Nitrogen Acid","Dual Nucleic Acid",0]
+],
+eng:[
+["Choose the correct plural of 'child'.","childs","children","childes","child's",1],
+["Which is a noun?","Run","Beautiful","Happiness","Quickly",2],
+["Identify the tense: 'She has finished her homework.'","Present Perfect","Past Simple","Future Continuous","Present Continuous",0],
+["Choose the correct passive voice: 'He writes a letter.'","A letter is written by him.","A letter was written by him.","A letter writes by him.","A letter has written by him.",0],
+["Which word is an antonym of 'brave'?","Courageous","Bold","Cowardly","Fearless",2],
+["Choose the correctly spelled word.","Recieve","Receive","Receeve","Receve",1]
+],
+sans:[
+["'रामः पठति।' આ વાક્યમાં ક્રિયાપદ કયું છે?","रामः","पठति","च","न",1],
+["संधि એટલે શું?","બે વર્ણોના મેળાપથી થતો ફેરફાર","એક શબ્દનો અર્થ","વ્યાકરણનો નિયમ","છંદનો પ્રકાર",0],
+["'गच्छति' ધાતુનો અર્થ શું છે?","ખાવું","જવું","બોલવું","સૂવું",1],
+["સંસ્કૃતમાં 'गुरुः' શબ્દનો અર્થ શું છે?","વિદ્યાર્થી","શિક્ષક","રાજા","મિત્ર",1],
+["કારક કેટલા પ્રકારના હોય છે?","6","7","8","5",2],
+["'बालकः' શબ્દ કયા લિંગમાં છે?","પુલ્લિંગ","સ્ત્રીલિંગ","નપુંસકલિંગ","કોઈપણ નહીં",0]
+],
+comp:[
+["CPU નું પૂરું નામ શું છે?","Central Processing Unit","Computer Processing Unit","Central Program Unit","Control Processing Unit",0],
+["નીચેનામાંથી કયું Input Device છે?","Monitor","Printer","Keyboard","Speaker",2],
+["1 Byte માં કેટલા Bits હોય છે?","4","8","16","2",1],
+["Operating System નું ઉદાહરણ કયું છે?","MS Word","Windows","Excel","Chrome",1],
+["RAM નું પૂરું નામ શું છે?","Random Access Memory","Read Access Memory","Random Active Memory","Read Active Memory",0],
+["Algorithm એટલે શું?","પ્રોગ્રામિંગ ભાષા","સમસ્યા ઉકેલવાના ક્રમબદ્ધ પગલાં","હાર્ડવેરનો ભાગ","એક વાયરસ",1]
+],
+phy12:[
+["વિદ્યુતપ્રવાહનો SI એકમ કયો છે?","એમ્પિયર","વોલ્ટ","ઓહ્મ","વોટ",0],
+["ઓહ્મનો નિયમ કયો છે?","V = IR","V = I/R","V = I+R","V = I-R",0],
+["પ્રકાશનું વેગ શૂન્યાવકાશમાં કેટલું છે?","3×10⁸ m/s","3×10⁶ m/s","3×10⁵ m/s","3×10¹⁰ m/s",0],
+["ટ્રાન્સફોર્મર શાનું રૂપાંતર કરે છે?","વોલ્ટેજ","વિદ્યુતપ્રવાહની દિશા","અવરોધ","દળ",0],
+["ફોટોઈલેક્ટ્રિક અસર કોના કારણે થાય છે?","પ્રકાશ","ધ્વનિ","ચુંબકત્વ","ગુરુત્વાકર્ષણ",0],
+["ચુંબકીય ફ્લક્સનો SI એકમ કયો છે?","વેબર","ટેસ્લા","હેન્રી","ફેરાડે",0]
+],
+chem12:[
+["સોલ્યુશનની મોલારિટીની વ્યાખ્યા શું છે?","1 લિટર દ્રાવણમાં ઓગળેલ દ્રાવ્યના મોલની સંખ્યા","1 kg દ્રાવકમાં દ્રાવ્યના મોલ","દ્રાવ્યનું દળ","દ્રાવણનું કુલ કદ",0],
+["બેન્ઝિનનું રાસાયણિક સૂત્ર શું છે?","C₆H₆","C₆H₁₂","C₆H₁₄","C₅H₅",0],
+["ઈલેક્ટ્રોકેમિકલ સેલમાં ઓક્સિડેશન કયા ઇલેક્ટ્રોડ પર થાય છે?","એનોડ","કેથોડ","બંને પર","કોઈના પર નહીં",0],
+["p-બ્લોક તત્વોમાં કયો ગ્રુપ Halogens તરીકે ઓળખાય છે?","ગ્રુપ 17","ગ્રુપ 1","ગ્રુપ 18","ગ્રુપ 2",0],
+["આલ્કોહોલનું functional group કયું છે?","-OH","-COOH","-CHO","-NH₂",0],
+["પોલિમરાઇઝેશન એટલે શું?","નાના અણુઓ (મોનોમર) જોડાઈને મોટો અણુ (પોલિમર) બનવાની ક્રિયા","અણુનું વિભાજન","દ્રાવણ બનવાની ક્રિયા","ગેસનું પ્રવાહીકરણ",0]
+],
+math12:[
+["Relations and Functions માં 'one-one function' એટલે શું?","દરેક ઈનપુટ માટે અલગ આઉટપુટ","એક જ આઉટપુટ બધા માટે","કોઈ આઉટપુટ નહીં","બંને સરખા",0],
+["d/dx (sin x) = ?","cos x","-cos x","-sin x","tan x",0],
+["∫x dx = ?","x²/2 + C","x² + C","2x + C","x + C",0],
+["મેટ્રિક્સનો ડિટરમિનન્ટ શાના માટે વપરાય છે?","ઇન્વર્સ શોધવા","સરવાળા માટે","બાદબાકી માટે","ગુણાકાર માટે",0],
+["Continuity ની શરત શું છે?","લિમિટ = ફંક્શન વેલ્યુ","લિમિટ અસ્તિત્વમાં ન હોય","ફંક્શન અવ્યાખ્યિત હોય","કોઈ શરત નથી",0],
+["Probability ની કિંમત કઈ range માં હોય છે?","0 થી 1","-1 થી 1","0 થી 100","1 થી 10",0]
+],
+bio12:[
+["પ્રજનન (Reproduction) ના મુખ્ય પ્રકાર કયા છે?","અલૈંગિક અને લૈંગિક","માત્ર અલૈંગિક","માત્ર લૈંગિક","કોઈ પ્રકાર નથી",0],
+["DNA Replication ક્યાં થાય છે?","ન્યુક્લિયસ","માઈટોકોન્ડ્રિયા","રાયબોઝોમ","ગોલ્ગી બોડી",0],
+["મેન્ડલના નિયમો કયા વિષય સાથે સંબંધિત છે?","આનુવંશિકતા (Genetics)","ઉત્ક્રાંતિ","પ્રકાશસંશ્લેષણ","શ્વસન",0],
+["Biotechnology માં કયું ટૂલ સૌથી વધુ વપરાય છે?","રિકોમ્બિનન્ટ DNA ટેકનોલોજી","માઈક્રોસ્કોપ","ટેલિસ્કોપ","બેરોમીટર",0],
+["ઇકોસિસ્ટમમાં ઊર્જાનો પ્રવાહ કઈ દિશામાં હોય છે?","એકદિશીય (Unidirectional)","દ્વિદિશીય","ચક્રીય","કોઈ દિશા નહીં",0],
+["માનવ પ્રજનનતંત્રમાં ઈંડાનું નિર્માણ ક્યાં થાય છે?","અંડાશય (Ovary)","ગર્ભાશય","વૃષણ","મૂત્રપિંડ",0]
+],
+eng12:[
+["Choose the correct reported speech: He said, 'I am busy.'","He said that he was busy.","He said that he is busy.","He says that he was busy.","He said I am busy.",0],
+["Identify the figure of speech: 'The stars danced in the sky.'","Personification","Simile","Metaphor","Alliteration",0],
+["Which is a compound sentence?","I went home and I slept.","I went home.","Going home, I slept.","Home I went.",0],
+["Choose the correct modal: 'You ___ finish your homework.'","must","is","are","be",0],
+["What is a synonym of 'happy'?","Joyful","Sad","Angry","Tired",0],
+["Identify the correct article: '___ honest man is respected.'","An","A","The","No article",0]
+],
+sans12:[
+["'सः गच्छति।' આ વાક્યમાં કર્તા કયો છે?","सः","गच्छति","च","न",0],
+["સમાસ એટલે શું?","બે કે વધુ શબ્દોનું એક પદ બનવું","એક શબ્દનું વિભાજન","વ્યાકરણનો પ્રકાર","છંદનો પ્રકાર",0],
+["'पठति' ધાતુનો અર્થ શું છે?","વાંચવું","લખવું","દોડવું","ઊંઘવું",0],
+["સંસ્કૃત સાહિત્યમાં 'रामायण' કોણે લખ્યું?","વાલ્મીકિ","વ્યાસ","કાલિદાસ","તુલસીદાસ",0],
+["વિભક્તિ કેટલા પ્રકારની હોય છે?","8","7","6","5",0],
+["'गुरुः शिष्यं पाठयति।' આ વાક્યમાં કર્મ કયું છે?","शिष्यं","गुरुः","पाठयति","च",0]
+],
+comp12:[
+["Python માં Variable ડિક્લેર કરવા શું જરૂરી છે?","માત્ર નામ આપવું","Type લખવો","Semicolon","Bracket",0],
+["Database માં Primary Key નું કાર્ય શું છે?","દરેક રેકોર્ડને Uniquely ઓળખવું","ડેટા Delete કરવું","ડેટા Sort કરવું","Table બનાવવું",0],
+["SQL નું પૂરું નામ શું છે?","Structured Query Language","Simple Query Language","Structured Question Language","System Query Language",0],
+["Networking માં IP Address શાના માટે વપરાય છે?","ડિવાઈસને ઓળખવા","ડેટા Store કરવા","પ્રોગ્રામ ચલાવવા","ફાઈલ ડિલીટ કરવા",0],
+["Cyber Security માં Firewall નું કાર્ય શું છે?","અનધિકૃત પ્રવેશ અટકાવવું","ડેટા Compress કરવું","વીડિયો Play કરવું","ફાઈલ Print કરવી",0],
+["HTML નું પૂરું નામ શું છે?","HyperText Markup Language","High Text Markup Language","HyperText Modern Language","HyperText Markup Link",0]
+]
+};
+let qs=mcqBank.phy;
+function loadQuiz(subject){
+subject=subject||'phy';
+qs = subject==='all' ? [].concat(mcqBank.phy,mcqBank.chem,mcqBank.math,mcqBank.bio) :
+     subject==='all12' ? [].concat(mcqBank.phy12,mcqBank.chem12,mcqBank.math12,mcqBank.bio12) :
+     mcqBank[subject];
+let box=document.getElementById('quiz');
+box.innerHTML=qs.map((q,i)=>`<div class="question"><b>${i+1}. ${q[0]}</b><br>${[1,2,3,4].map((n,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${q[n]}</label><br>`).join('')}</div>`).join('');
+document.getElementById('score').innerText='';
+}
+function checkQuiz(){
+let score=0;
+qs.forEach((q,i)=>{let a=document.querySelector(`input[name="q${i}"]:checked`);if(a&&+a.value===q[5])score++});
+document.getElementById('score').innerText=`તમારો સ્કોર: ${score}/${qs.length} 🎉`;
+}
+loadQuiz('phy');
+
+// ==== મહત્વના પ્રશ્નો-જવાબ બેંક (વિષય પ્રમાણે) ====
+const qBank={
+phy:[
+["SI એકમ શું છે?","SI એકમ ભૌતિક રાશિ માપવા માટે આંતરરાષ્ટ્રીય સ્તરે સ્વીકૃત પ્રમાણભૂત એકમ છે."],
+["ઝડપ અને વેગ વચ્ચે શું તફાવત છે?","ઝડપ એ અદિશ રાશિ છે (માત્ર મૂલ્ય), જ્યારે વેગ એ સદિશ રાશિ છે (મૂલ્ય અને દિશા બંને)."],
+["ન્યૂટનનો બીજો નિયમ લખો.","બળ = દળ × પ્રવેગ (F = ma)."],
+["જડત્વ એટલે શું?","પદાર્થની પોતાની સ્થિતિ (સ્થિર કે ગતિમાન) જાળવી રાખવાની વૃત્તિને જડત્વ કહે છે."]
+],
+chem:[
+["પરમાણુ ક્રમાંક શું છે?","પરમાણુના કેન્દ્રમાં રહેલા પ્રોટોનની સંખ્યાને પરમાણુ ક્રમાંક કહે છે."],
+["મોલ શું છે?","જેટલા પદાર્થમાં એવોગેડ્રો સંખ્યા (6.022×10²³) જેટલા મૂળભૂત કણો હોય તે પદાર્થની માત્રાને એક મોલ કહે છે."],
+["સમસ્થાનિકો (Isotopes) એટલે શું?","સમાન પરમાણુ ક્રમાંક પરંતુ ભિન્ન દળ ક્રમાંક ધરાવતા તત્વોના પરમાણુઓને સમસ્થાનિકો કહે છે."],
+["આવર્ત કોષ્ટકમાં તત્વોને કેવી રીતે ગોઠવવામાં આવ્યા છે?","તત્વોને તેમના વધતા પરમાણુ ક્રમાંક પ્રમાણે આવર્ત કોષ્ટકમાં ગોઠવવામાં આવ્યા છે."]
+],
+math:[
+["સમુચ્ચય (Set) એટલે શું?","સુવ્યાખ્યિત વસ્તુઓના સંગ્રહને સમુચ્ચય કહે છે."],
+["વિધેય (Function) ની વ્યાખ્યા આપો.","બે સમુચ્ચયો વચ્ચેનો એવો સંબંધ કે જેમાં પ્રથમ સમુચ્ચયના દરેક ઘટકને બીજા સમુચ્ચયનો બરાબર એક જ ઘટક સંકળાયેલ હોય તેને વિધેય કહે છે."],
+["ત્રિકોણમિતિનું મૂળભૂત સૂત્ર લખો.","sin²θ + cos²θ = 1"],
+["દ્વિઘાત સમીકરણ એટલે શું?","ax² + bx + c = 0 (જ્યાં a ≠ 0) સ્વરૂપના સમીકરણને દ્વિઘાત સમીકરણ કહે છે."]
+],
+bio:[
+["કોષ એટલે શું?","સજીવોના મૂળભૂત રચનાત્મક અને કાર્યાત્મક એકમને કોષ કહે છે."],
+["પ્રકાશસંશ્લેષણ એટલે શું?","લીલા છોડ સૂર્યપ્રકાશની હાજરીમાં CO₂ અને H₂O માંથી ગ્લુકોઝ અને ઓક્સિજન બનાવે તે પ્રક્રિયાને પ્રકાશસંશ્લેષણ કહે છે."],
+["વર્ગીકરણ (Classification) શા માટે જરૂરી છે?","વિવિધ સજીવોના અભ્યાસ અને ઓળખને સરળ બનાવવા માટે વર્ગીકરણ જરૂરી છે."],
+["કોષ પટલનું કાર્ય શું છે?","કોષ પટલ કોષની અંદર-બહાર પદાર્થોના પરિવહનનું નિયમન કરે છે."]
+],
+eng:[
+["What is a noun?","A noun is a word that names a person, place, thing, or idea."],
+["Explain Active and Passive Voice.","In active voice, the subject performs the action; in passive voice, the subject receives the action."],
+["What are the types of tenses?","There are four main tenses: Simple, Continuous, Perfect, and Perfect Continuous — each in Present, Past, and Future forms."],
+["What is a Preposition?","A preposition is a word used before a noun or pronoun to show its relation to another word in the sentence (e.g. in, on, at)."]
+],
+sans:[
+["संधि એટલે શું?","બે વર્ણોના મેળાપથી ઉત્પન્ન થતા ધ્વનિ પરિવર્તનને સંધિ કહે છે."],
+["કારક એટલે શું?","વાક્યમાં ક્રિયાપદ સાથે નામનો સંબંધ દર્શાવતા તત્વને કારક કહે છે (કર્તા, કર્મ, કરણ વગેરે)."],
+["ધાતુરૂપ એટલે શું?","ધાતુ (ક્રિયાનો મૂળ શબ્દ) પરથી બનતા ક્રિયાપદના રૂપોને ધાતુરૂપ કહે છે."],
+["સંસ્કૃત ભાષાનું મહત્વ શું છે?","સંસ્કૃત એ પ્રાચીન ભારતીય સાહિત્ય, વેદ અને શાસ્ત્રોની ભાષા છે અને અનેક ભારતીય ભાષાઓનું મૂળ છે."]
+],
+comp:[
+["Hardware અને Software વચ્ચે તફાવત શું છે?","Hardware એ કમ્પ્યુટરના ભૌતિક ભાગો છે (દા.ત. CPU, Keyboard), જ્યારે Software એ કમ્પ્યુટરને ચલાવતા પ્રોગ્રામ્સ છે."],
+["Algorithm એટલે શું?","સમસ્યાના ઉકેલ માટેના ક્રમબદ્ધ પગલાંઓની યાદીને Algorithm કહે છે."],
+["RAM અને ROM વચ્ચે તફાવત શું છે?","RAM એ temporary memory છે જે પાવર બંધ થતાં ડેટા ગુમાવે છે; ROM એ permanent memory છે જેનો ડેટા સચવાયેલો રહે છે."],
+["Operating System શું કરે છે?","Operating System કમ્પ્યુટરના હાર્ડવેર અને સોફ્ટવેર વચ્ચે સંકલન કરી યુઝરને કમ્પ્યુટર વાપરવાની સુવિધા આપે છે."]
+],
+phy12:[
+["ઓહ્મનો નિયમ લખો.","અચળ તાપમાને, વાહકમાંથી પસાર થતો વિદ્યુતપ્રવાહ તેના બે છેડા વચ્ચેના વિભવાંતરના સપ્રમાણમાં હોય છે (V = IR)."],
+["ટ્રાન્સફોર્મર એટલે શું?","ટ્રાન્સફોર્મર એ એક એવું ઉપકરણ છે જે વૈકલ્પિક પ્રવાહના વોલ્ટેજને વધારે અથવા ઘટાડે છે."],
+["ફોટોઈલેક્ટ્રિક અસર એટલે શું?","જ્યારે યોગ્ય આવૃત્તિનો પ્રકાશ ધાતુની સપાટી પર પડે ત્યારે તેમાંથી ઈલેક્ટ્રોન ઉત્સર્જિત થાય તે ઘટનાને ફોટોઈલેક્ટ્રિક અસર કહે છે."],
+["ચુંબકીય ફ્લક્સ એટલે શું?","કોઈ પણ સપાટીમાંથી પસાર થતી ચુંબકીય ક્ષેત્રરેખાઓની કુલ સંખ્યાને ચુંબકીય ફ્લક્સ કહે છે."]
+],
+chem12:[
+["મોલારિટી એટલે શું?","1 લિટર દ્રાવણમાં ઓગળેલ દ્રાવ્યના મોલની સંખ્યાને મોલારિટી કહે છે."],
+["ઈલેક્ટ્રોકેમિકલ સેલમાં એનોડ અને કેથોડ શું છે?","એનોડ પર ઓક્સિડેશન થાય છે અને કેથોડ પર રિડક્શન થાય છે."],
+["પોલિમર એટલે શું?","નાના અણુઓ (મોનોમર) જોડાઈને બનેલા મોટા અણુને પોલિમર કહે છે."],
+["આલ્કોહોલનું functional group કયું છે?","આલ્કોહોલનું functional group -OH (હાઈડ્રોક્સિલ) છે."]
+],
+math12:[
+["Continuity (સાતત્ય) ની શરત શું છે?","કોઈ બિંદુએ ફંક્શનની લિમિટ તે બિંદુ પરની ફંક્શન વેલ્યુ બરાબર હોય તો ફંક્શન તે બિંદુએ સતત (continuous) કહેવાય."],
+["Derivative (વ્યુત્પન્ન) એટલે શું?","ફંક્શનના ફેરફારના દરને દર્શાવતી ગાણિતિક ક્રિયાને derivative કહે છે."],
+["Integration એટલે શું?","Differentiation ની વિરુદ્ધ ક્રિયા, જેના દ્વારા ફંક્શન નીચેનો વિસ્તાર શોધાય છે, તેને Integration કહે છે."],
+["Probability ની રેન્જ શું છે?","Probability ની કિંમત હંમેશા 0 થી 1 ની વચ્ચે હોય છે."]
+],
+bio12:[
+["અલૈંગિક અને લૈંગિક પ્રજનન વચ્ચે તફાવત શું છે?","અલૈંગિક પ્રજનનમાં એક જ પિતૃમાંથી સંતતિ બને છે; લૈંગિક પ્રજનનમાં બે પિતૃઓના જનીન દ્રવ્યના જોડાણથી સંતતિ બને છે."],
+["મેન્ડલના વારસાગતિના નિયમો કયા છે?","વિભાજનનો નિયમ (Law of Segregation) અને સ્વતંત્ર વર્ગીકરણનો નિયમ (Law of Independent Assortment)."],
+["Biotechnology એટલે શું?","સજીવો અથવા તેમના ઘટકોનો ઉપયોગ કરીને ઉપયોગી ઉત્પાદનો કે પ્રક્રિયાઓ વિકસાવવાના વિજ્ઞાનને Biotechnology કહે છે."],
+["ઇકોસિસ્ટમમાં ઊર્જાનો પ્રવાહ કેવો હોય છે?","ઇકોસિસ્ટમમાં ઊર્જાનો પ્રવાહ એકદિશીય (Unidirectional) હોય છે — સૂર્યથી ઉત્પાદકો તરફ અને પછી ઉપભોક્તાઓ તરફ."]
+],
+eng12:[
+["Reported speech એટલે શું?","કોઈ વ્યક્તિએ કહેલા શબ્દોને પોતાના શબ્દોમાં ફરીથી રજૂ કરવાની રીતને Reported/Indirect speech કહે છે."],
+["Figure of speech એટલે શું?","ભાષાને વધુ અસરકારક બનાવવા વપરાતી અલંકારિક શૈલી (દા.ત. Simile, Metaphor, Personification) ને Figure of speech કહે છે."],
+["Compound sentence એટલે શું?","બે કે વધુ independent clauses ને conjunction (and, but, or) વડે જોડીને બનતા વાક્યને Compound sentence કહે છે."],
+["Modal verbs કયા છે?","can, could, may, might, must, shall, should, will, would — આ Modal verbs છે જે શક્યતા, જરૂરિયાત કે પરવાનગી દર્શાવે છે."]
+],
+sans12:[
+["સમાસ એટલે શું?","બે કે વધુ શબ્દોનું એક પદમાં રૂપાંતર થવાની પ્રક્રિયાને સમાસ કહે છે."],
+["વિભક્તિ કેટલા પ્રકારની હોય છે?","સંસ્કૃતમાં કુલ 8 વિભક્તિઓ હોય છે (પ્રથમાથી અષ્ટમી સુધી)."],
+["રામાયણના રચયિતા કોણ છે?","મહર્ષિ વાલ્મીકિ રામાયણના રચયિતા છે."],
+["કર્તા અને કર્મ વચ્ચે તફાવત શું છે?","કર્તા એ ક્રિયા કરનાર છે, જ્યારે કર્મ એ ક્રિયાનું ફળ ભોગવનાર (object) છે."]
+],
+comp12:[
+["Primary Key એટલે શું?","Database ના Table માં દરેક રેકોર્ડને Uniquely ઓળખતા Field ને Primary Key કહે છે."],
+["SQL એટલે શું?","Database સાથે વાતચીત કરવા વપરાતી ભાષાને Structured Query Language (SQL) કહે છે."],
+["IP Address એટલે શું?","નેટવર્ક પર દરેક ડિવાઈસને ઓળખવા માટે અપાયેલ Unique Address ને IP Address કહે છે."],
+["Firewall નું કાર્ય શું છે?","Firewall નેટવર્કમાં અનધિકૃત પ્રવેશને અટકાવી સિસ્ટમની સુરક્ષા કરે છે."]
+]
+};
+function showQBank(subject){
+let box=document.getElementById('qbank');
+box.innerHTML=qBank[subject].map((q,i)=>`<div class="question"><b>પ્ર.${i+1} ${q[0]}</b><br>જવાબ: ${q[1]}</div>`).join('');
+}
+showQBank('phy');
+
+let secs=1500, interval=null;
+function renderTimer(){let m=Math.floor(secs/60),s=secs%60;document.getElementById('timer').innerText=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+function startTimer(){if(interval)return;interval=setInterval(()=>{if(secs>0){secs--;renderTimer()}else{clearInterval(interval);interval=null;alert("અભ્યાસ સત્ર પૂર્ણ થયું! 🎉")}},1000)}
+function pauseTimer(){clearInterval(interval);interval=null}
+function resetTimer(){pauseTimer();secs=1500;renderTimer()}
+
+// ==== હાજરી ટ્રેકર ====
+const weekDays=['સોમ','મંગળ','બુધ','ગુરુ','શુક્ર','શનિ'];
+let attendance={};
+function renderAttendance(){
+let box=document.getElementById('attendanceDays');
+box.innerHTML=weekDays.map(d=>{
+let st=attendance[d]||'';
+return `<div style="text-align:center"><div class="day-btn ${st}" onclick="toggleAttendance('${d}')">${d[0]}</div><div style="font-size:11px;margin-top:3px">${d}</div></div>`;
+}).join('');
+let present=Object.values(attendance).filter(v=>v==='present').length;
+let marked=Object.values(attendance).filter(v=>v).length;
+document.getElementById('attSummary').innerText=marked? `હાજરી: ${present}/${marked} દિવસ`:'હજુ કોઈ દિવસ માર્ક કર્યો નથી.';
+}
+function toggleAttendance(d){
+let st=attendance[d];
+attendance[d]= st==='present' ? 'absent' : st==='absent' ? '' : 'present';
+renderAttendance();
+}
+renderAttendance();
+
+// ==== હોમવર્ક લિસ્ટ ====
+let homework=[];
+function addHomework(){
+let subject=document.getElementById('hwSubject').value.trim();
+let task=document.getElementById('hwTask').value.trim();
+let date=document.getElementById('hwDate').value;
+if(!subject||!task){alert('કૃપા કરી વિષય અને કાર્ય ભરો.');return}
+homework.push({subject,task,date,done:false});
+document.getElementById('hwSubject').value='';
+document.getElementById('hwTask').value='';
+document.getElementById('hwDate').value='';
+renderHomework();
+}
+function toggleHomework(i){homework[i].done=!homework[i].done;renderHomework()}
+function deleteHomework(i){homework.splice(i,1);renderHomework()}
+function renderHomework(){
+let box=document.getElementById('hwList');
+if(!homework.length){box.innerHTML='<p style="color:#889">કોઈ હોમવર્ક ઉમેર્યું નથી.</p>';return}
+box.innerHTML=homework.map((h,i)=>`
+<div class="track-row ${h.done?'done':''}">
+<input type="checkbox" ${h.done?'checked':''} onchange="toggleHomework(${i})">
+<div style="flex:1"><b>${h.subject}</b> — ${h.task} ${h.date?`<span class="badge">📅 ${h.date}</span>`:''}</div>
+<button onclick="deleteHomework(${i})">🗑️</button>
+</div>`).join('');
+}
+renderHomework();
+
+// ==== લોગિન ====
+let currentStudent=null;
+function doLogin(){
+let name=document.getElementById('loginName').value.trim();
+let roll=document.getElementById('loginRoll').value.trim();
+let div=document.getElementById('loginDiv').value;
+if(!name){alert('કૃપા કરી નામ લખો.');return}
+currentStudent={name,roll,div};
+document.getElementById('loginStatus').innerText=`✅ લોગિન થયું: ${name}${roll?' (રોલ '+roll+')':''}${div?' - વિભાગ '+div:''}`;
+document.getElementById('greetBar').innerText=`👋 નમસ્તે, ${name}! આજે પણ સારો અભ્યાસ કરો.`;
+}
+function doLogout(){
+currentStudent=null;
+document.getElementById('loginStatus').innerText='લોગ આઉટ થયું.';
+document.getElementById('greetBar').innerText='';
+document.getElementById('loginName').value='';
+document.getElementById('loginRoll').value='';
+document.getElementById('loginDiv').value='';
+}
+
+// ==== ધોરણ 11 / 12 ટોગલ ====
+let currentStd=11;
+function setStd(std){
+currentStd=std;
+let b11=document.getElementById('std11Btn'), b12=document.getElementById('std12Btn');
+if(std===11){
+b11.style.background='white';b11.style.color='#3157e8';
+b12.style.background='transparent';b12.style.color='white';
+}else{
+b12.style.background='white';b12.style.color='#3157e8';
+b11.style.background='transparent';b11.style.color='white';
+}
+}
+
+// ==== ડાર્ક મોડ ====
+function toggleDark(){
+document.body.classList.toggle('dark');
+let btn=event.target;
+btn.innerText = document.body.classList.contains('dark') ? '☀️ Light Mode' : '🌙 Dark Mode';
+}
+</script>
+</body>
+</html>
